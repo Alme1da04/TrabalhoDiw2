@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>OLD LEGENDS</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja virtual</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/style.CSS">
+
+</head>
+
+<body>
+
+    <!--link para filtro e carrosel-->
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <!--outros links -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <header class="custom-header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img id="minhaLogo" src="/images/oldlegends.jpeg" alt="Logo da Empresa" height="30">
+                    OLD LEGENDS
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="sobre.html">Sobre Nós</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contato</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Carrinho</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+
+
+    </header>
+
+
+    <!--filtro-->
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <input type="text" id="filterInput" class="form-control mb-2" placeholder="Digite para filtrar produtos">
+            </div>
+        </div>
+        <div class="row" id="productRow">
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JS do filtro-->
+
+    <script>
+        // Função para fazer a requisição à API e criar os cards
+        function fetchProducts() {
+            fetch('https://fakestoreapi.com/products')
+                .then(response => response.json())
+                .then(products => {
+                    let productRow = document.getElementById('productRow');
+
+                    // Função para filtrar os produtos
+                    function filterProducts(filterText) {
+                        // Limpar os cards existentes
+                        productRow.innerHTML = '';
+
+                        // Filtrar os produtos com base no texto digitado
+                        const filteredProducts = products.filter(product =>
+                            product.title.toLowerCase().includes(filterText.toLowerCase())
+                        );
+
+                        // Loop para criar os cards filtrados
+                        filteredProducts.forEach(product => {
+                            // Criação do HTML para o card
+                            let cardHtml = `
+                                <div class="col-md-4 mb-4">
+                                    <a href="product-details.html?id=${product.id}" class="card-link">
+                                        <div class="card h-100">
+                                            <img src="${product.image}" class="card-img-top" alt="${product.title}">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${product.title}</h5>
+                                                <p class="card-text">${product.description}</p>
+                                                <p class="card-price">$${product.price}</p>
+                                                <button class="btn btn-primary">Comprar</button>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            `;
+
+                            // Adiciona o card à linha de produtos
+                            productRow.innerHTML += cardHtml;
+                        });
+                    }
+
+                    // Função para atualizar os cards de acordo com o texto filtrado
+                    function updateProductList() {
+                        const filterText = document.getElementById('filterInput').value;
+                        filterProducts(filterText);
+                    }
+
+                    // Atualizar os cards iniciais
+                    filterProducts('');
+
+                    // Adicionar evento de input ao campo de filtro
+                    document.getElementById('filterInput').addEventListener('input', updateProductList);
+                });
+        }
+
+        // Chamada da função para buscar e exibir os produtos
+        fetchProducts();
+    </script>
+    <!--end filtro-->
+    <div class="container">
+        <div class="row" id="productRow">
+
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+    <script>
+        // Função para fazer a requisição à API e criar os cards
+        function fetchProducts() {
+            fetch('https://fakestoreapi.com/products')
+                .then(response => response.json())
+                .then(products => {
+                    let productRow = document.getElementById('productRow');
+
+                    // Loop para criar três cards na primeira linha
+                    for (let i = 0; i < 3; i++) {
+                        let product = products[i];
+
+                        // Criação do HTML para o card
+                        let cardHtml = `
+                  <div class="col-md-4 mb-4">
+                    <a href="product-details.html?id=${product.id}" class="card-link">
+                      <div class="card h-100">
+                        <img src="${product.image}" class="card-img-top" alt="${product.title}">
+                        <div class="card-body">
+                          <h5 class="card-title">${product.title}</h5>
+                          <p class="card-text">${product.description}</p>
+                          <p class="card-price">$${product.price}</p>
+                          <button class="btn btn-primary">Comprar</button>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                `;
+
+                        // Adiciona o card à primeira linha
+                        productRow.innerHTML += cardHtml;
+                    }
+
+                    // Loop para criar três cards na segunda linha
+                    for (let i = 3; i < 6; i++) {
+                        let product = products[i];
+
+                        // Criação do HTML para o card
+                        let cardHtml = `
+                  <div class="col-md-4 mb-4">
+                    <a href="product-details.html?id=${product.id}" class="card-link">
+                      <div class="card h-100">
+                        <img src="${product.image}" class="card-img-top" alt="${product.title}">
+                        <div class="card-body">
+                          <h5 class="card-title">${product.title}</h5>
+                          <p class="card-text">${product.description}</p>
+                          <p class="card-price">$${product.price}</p>
+                          <button class="btn btn-primary">Comprar</button>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                `;
+
+                        // Adiciona o card à segunda linha
+                        productRow.innerHTML += cardHtml;
+                    }
+                });
+        }
+
+        // Chamada da função para buscar e exibir os produtos
+        fetchProducts();
+    </script>
+
+    
+
+</body>
+
+
+</main>
+
+
+
+
+<footer class="bg-dark text-light">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Joao Vitor Almeida Ansaloni</h5>
+                <p>Pontifícia Universidade Católica - ADS - Noite</p>
+                <p>Endereço do Criador</p>
+                <p>Email do Criador</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Informações de Pagamento</h5>
+                <p>Crédito/Débito</p>
+                <p>Pix</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Contato</h5>
+                <p>(31)-98267-2919</p>
+                <p>joaoaaksius@gmail.com</p>
+                <p>Instagram: @_jalmed_</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
